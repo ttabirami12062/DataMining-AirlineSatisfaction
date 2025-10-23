@@ -13,6 +13,7 @@ function Navigation({ currentPage, setCurrentPage }) {
       <button className="btn btn-amber" onClick={() => setCurrentPage('about')}>About Us</button>
       <button className="btn btn-amber" onClick={() => setCurrentPage('predict')}>Predict</button>
       <button className="btn btn-amber" onClick={() => setCurrentPage('reports')}>Reports</button>
+      <button className="btn btn-amber" onClick={() => setCurrentPage('Dashboard')}>Dashboard</button>
     </div>
   );
 }
@@ -23,10 +24,10 @@ function HomePage() {
       <h1 className="h1-xl">WELCOME TO AIRLINE PASSENGER SATISFACTION SYSTEM</h1>
       <div className="card centered">
         <img
-          className="hero-img"
-          alt="Happy passengers at airport"
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Crect fill='%23e3f2fd' width='1200' height='400'/%3E%3Cg%3E%3Cpath fill='%23fff' d='M0 300h1200v20H0z'/%3E%3Cpath fill='%23ddd' d='M50 200h100v100H50z M200 150h100v150H200z M350 180h100v120H350z M900 200h100v100H900z M1050 150h100v150H1050z'/%3E%3Cpath fill='%23ccc' d='M100 200v-50l-30 25z M250 150v-40l-30 20z M400 180v-45l-30 22z M950 200v-50l-30 25z M1100 150v-40l-30 20z'/%3E%3Cellipse cx='120' cy='380' rx='80' ry='15' fill='%23bbb'/%3E%3Cellipse cx='180' cy='320' rx='60' ry='12' fill='%23bbb'/%3E%3Cpath fill='%23bbb' d='M850 250l150-30 50 20-150 30z M900 240l140-28v8l-140 28z'/%3E%3Cellipse cx='980' cy='280' rx='30' ry='30' fill='%23555'/%3E%3Cellipse cx='1050' cy='280' rx='30' ry='30' fill='%23555'/%3E%3Cellipse cx='1120' cy='280' rx='30' ry='30' fill='%23555'/%3E%3Cpath fill='%23e3f2fd' d='M920 200h140v40H920z'/%3E%3C/g%3E%3Cg%3E%3Cellipse cx='80' cy='100' rx='40' ry='50' fill='%23fdd'/%3E%3Cpath fill='%23fcc' d='M70 105l-15 8 15 8 15-8z'/%3E%3Cpath fill='%23999' d='M50 110h60v3H50z'/%3E%3Cpath fill='%23999' d='M30 50l30 15v10l-30-15z M130 50l-30 15v10l30-15z'/%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='150' r='60' fill='%23fef3c7' opacity='0.3'/%3E%3Ccircle cx='520' cy='130' r='50' fill='%23fcd34d'/%3E%3Cpath d='M500 115c-5 0-8 3-8 8 0 3 2 5 5 6v-6h6c1-4-1-8-3-8z M540 115c5 0 8 3 8 8 0 3-2 5-5 6v-6h-6c-1-4 1-8 3-8z' fill='%23000'/%3E%3Cpath d='M505 140q15 8 30 0' stroke='%23000' stroke-width='2' fill='none'/%3E%3C/g%3E%3Cg transform='translate(500,220)'%3E%3Cellipse cx='0' cy='80' rx='25' ry='80' fill='%232563eb'/%3E%3Ccircle cx='0' cy='0' r='35' fill='%23fcd5ce'/%3E%3Cellipse cx='-8' cy='-5' rx='4' ry='6' fill='%23000'/%3E%3Cellipse cx='8' cy='-5' rx='4' ry='6' fill='%23000'/%3E%3Cpath d='M-8 8q8 5 16 0' stroke='%23000' stroke-width='2' fill='none'/%3E%3Cpath fill='%23964B00' d='M-20 -15q-5-15 0-25 M20 -15q5-15 0-25'/%3E%3Cellipse cx='-30' cy='50' rx='8' ry='35' fill='%232563eb'/%3E%3Cellipse cx='30' cy='50' rx='8' ry='35' fill='%232563eb'/%3E%3Cellipse cx='-20' cy='160' rx='20' ry='22' fill='%231e3a8a'/%3E%3Cellipse cx='20' cy='160' rx='20' ry='22' fill='%231e3a8a'/%3E%3C/g%3E%3Cg transform='translate(700,220)'%3E%3Cellipse cx='0' cy='80' rx='25' ry='80' fill='%2314b8a6'/%3E%3Ccircle cx='0' cy='0' r='35' fill='%23fcd5ce'/%3E%3Cellipse cx='-8' cy='-5' rx='4' ry='6' fill='%23000'/%3E%3Cellipse cx='8' cy='-5' rx='4' ry='6' fill='%23000'/%3E%3Cpath fill='%23964B00' d='M-25 -10q-10-20 -5-30l40 5q5 10-5 30'/%3E%3Cellipse cx='-30' cy='50' rx='8' ry='35' fill='%2314b8a6'/%3E%3Cellipse cx='30' cy='50' rx='8' ry='35' fill='%2314b8a6'/%3E%3Cellipse cx='25' cy='85' rx='18' ry='25' fill='%235b21b6'/%3E%3Cellipse cx='-20' cy='160' rx='20' ry='22' fill='%23fb7185'/%3E%3Cellipse cx='20' cy='160' rx='20' ry='22' fill='%23fb7185'/%3E%3C/g%3E%3C/svg%3E"
-        />
+        className="hero-img"
+        alt="Airline service"
+        src="/images/airline.jpeg"
+      />
         <p className="lead" style={{ fontWeight: 600 }}>
           Predict passenger satisfaction with data-driven insights
         </p>
@@ -46,7 +47,7 @@ function AboutPage() {
             designed to revolutionize how airlines understand and improve their customer experience.
           </p>
           <p>
-            Our system leverages advanced machine learning algorithms to analyze various factors that
+            Our system leverages advanced data mining algorithms to analyze various factors that
             contribute to passenger satisfaction, including seat comfort, in-flight services, baggage
             handling, and more.
           </p>
@@ -56,10 +57,9 @@ function AboutPage() {
               Key Features:
             </h3>
             <ul style={{ display: 'grid', rowGap: '0.75rem' }}>
-              <li>✈️ Comprehensive satisfaction prediction based on multiple service parameters</li>
-              <li>📊 Detailed reporting and analytics for tracking trends</li>
-              <li>🎯 User-friendly interface for easy data input and visualization</li>
-              <li>🔍 Real-time prediction results to support decision-making</li>
+              <li>User-friendly interface for easy data input and visualization</li>
+              <li>Real-time prediction results to support decision-making</li>
+              <li>Detailed reporting and analytics for tracking trends</li>
             </ul>
           </div>
 
@@ -69,6 +69,17 @@ function AboutPage() {
             informed decisions that enhance customer satisfaction and loyalty.
           </p>
         </div>
+
+            <div className="card" style={{ marginTop: '2rem', background: 'var(--gray-50)' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--gray-800)', marginBottom: '1rem' }}>
+              Collaborators
+            </h3>
+            <ul style={{ display: 'grid', rowGap: '0.5rem' }}>
+              <li>Nethra Janardhanan</li>
+              <li>Abirami Thiyagarajan</li>
+              <li>Sai Krishna Bharadwaj Burra</li>
+            </ul>
+          </div>
       </div>
     </div>
   );
@@ -259,7 +270,6 @@ export default function AirlineSatisfactionSystem() {
   const [predictions, setPredictions] = useState([]);
   const [predictionResult, setPredictionResult] = useState('');
 
-  // Keep age as STRING to avoid number-input quirks while typing
   const [formData, setFormData] = useState({
     gender: 'Female',
     customerType: 'Loyal',
