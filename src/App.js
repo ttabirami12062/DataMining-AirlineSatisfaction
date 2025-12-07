@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Home } from 'lucide-react';
 import './App.css';
+import Dashboard from './Dashboard';
 
 /* -------------------- Pages (outside parent to avoid remounts) -------------------- */
 
@@ -24,10 +25,10 @@ function HomePage() {
       <h1 className="h1-xl">WELCOME TO AIRLINE PASSENGER SATISFACTION SYSTEM</h1>
       <div className="card centered">
         <img
-        className="hero-img"
-        alt="Airline service"
-        src="/images/airline.jpeg"
-      />
+          className="hero-img"
+          alt="Airline service"
+          src="/images/airline.jpeg"
+        />
         <p className="lead" style={{ fontWeight: 600 }}>
           Predict passenger satisfaction with data-driven insights
         </p>
@@ -70,16 +71,16 @@ function AboutPage() {
           </p>
         </div>
 
-            <div className="card" style={{ marginTop: '2rem', background: 'var(--gray-50)' }}>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--gray-800)', marginBottom: '1rem' }}>
-              Collaborators
-            </h3>
-            <ul style={{ display: 'grid', rowGap: '0.5rem' }}>
-              <li>Nethra Janardhanan</li>
-              <li>Abirami Thiyagarajan</li>
-              <li>Sai Krishna Bharadwaj Burra</li>
-            </ul>
-          </div>
+        <div className="card" style={{ marginTop: '2rem', background: 'var(--gray-50)' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--gray-800)', marginBottom: '1rem' }}>
+            Collaborators
+          </h3>
+          <ul style={{ display: 'grid', rowGap: '0.5rem' }}>
+            <li>Nethra Janardhanan</li>
+            <li>Abirami Thiyagarajan</li>
+            <li>Sai Krishna Bharadwaj Burra</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -141,7 +142,7 @@ function PredictPage({ formData, handleInputChange, handlePredict, predictionRes
                 value={formData.age}
                 onChange={(e) => {
                   const digits = e.target.value.replace(/\D/g, '');
-                  handleInputChange('age', digits.slice(0, 3)); // allow up to 3 digits
+                  handleInputChange('age', digits.slice(0, 3));
                 }}
                 maxLength={3}
                 autoComplete="off"
@@ -154,8 +155,7 @@ function PredictPage({ formData, handleInputChange, handlePredict, predictionRes
                 className="form-input"
                 type="number"
                 value={formData.flightDistance}
-                onChange={e => handleInputChange('flightDistance', e.target.value
-                )}
+                onChange={e => handleInputChange('flightDistance', e.target.value)}
               />
             </div>
 
@@ -173,13 +173,13 @@ function PredictPage({ formData, handleInputChange, handlePredict, predictionRes
           {/* Right column */}
           <div className="form-col">
             {[
-              ['Seat Comfort','seatComfort'],
-              ['Inflight Wifi','inflightWifi'],
-              ['Online Boarding','onlineBoarding'],
-              ['Cleanliness','cleanliness'],
-              ['Baggage Handling','baggageHandling'],
-              ['Gate Location','gateLocation'],
-              ['Inflight entertainment','inflightEntertainment']
+              ['Seat Comfort', 'seatComfort'],
+              ['Inflight Wifi', 'inflightWifi'],
+              ['Online Boarding', 'onlineBoarding'],
+              ['Cleanliness', 'cleanliness'],
+              ['Baggage Handling', 'baggageHandling'],
+              ['Gate Location', 'gateLocation'],
+              ['Inflight entertainment', 'inflightEntertainment'],
             ].map(([label, key]) => (
               <div className="form-row" key={key}>
                 <label className="form-label">{label}</label>
@@ -283,7 +283,7 @@ export default function AirlineSatisfactionSystem() {
     cleanliness: '0',
     baggageHandling: '1',
     gateLocation: '2',
-    inflightEntertainment: '1'
+    inflightEntertainment: '1',
   });
 
   const handleInputChange = (field, value) => {
@@ -298,17 +298,15 @@ export default function AirlineSatisfactionSystem() {
       parseInt(formData.cleanliness),
       parseInt(formData.baggageHandling),
       parseInt(formData.gateLocation),
-      parseInt(formData.inflightEntertainment)
+      parseInt(formData.inflightEntertainment),
     ];
     const avgRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
     const satisfaction = avgRating >= 2.5 ? 'Satisfied' : 'Not satisfied';
 
     const newPrediction = {
       ...formData,
-      // if you ever need numeric age, convert here:
-      // age: Number(formData.age || 0),
       prediction: satisfaction,
-      timestamp: new Date().toLocaleString()
+      timestamp: new Date().toLocaleString(),
     };
 
     setPredictions(prev => [...prev, newPrediction]);
@@ -335,6 +333,7 @@ export default function AirlineSatisfactionSystem() {
           />
         )}
         {currentPage === 'reports' && <ReportsPage predictions={predictions} />}
+        {currentPage === 'Dashboard' && <Dashboard />}
       </div>
     </div>
   );

@@ -197,3 +197,112 @@
 /* Sections sized like your reference */
 .section-narrow { max-width: 64rem; margin: 0 auto; }
 .section-wide   { max-width: 80rem; margin: 0 auto; }
+
+.dashboard-page {
+  padding: 2rem 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card h3 {
+  margin-bottom: 1rem;
+}
+/* -------- Dashboard layout -------- */
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 2rem 2.5rem 2.5rem;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+.dashboard-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  min-width: 220px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  background: #fff7e6;
+}
+
+.metric-label {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chart-box {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.chart-inner {
+  position: relative;
+  width: 100%;
+  height: 260px;
+}
+
+.chart-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.chart-note,
+.chart-caption,
+.chart-footnote {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--gray-700);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.chart-footnote {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-weight: 600;
+}
