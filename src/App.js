@@ -4,7 +4,6 @@ import { Home } from 'lucide-react';
 import './App.css';
 import Dashboard from './Dashboard';
 
-/* -------------------- Pages (outside parent to avoid remounts) -------------------- */
 
 function Navigation({ currentPage, setCurrentPage }) {
   return (
@@ -86,7 +85,8 @@ function AboutPage() {
   );
 }
 
-function PredictPage({ formData, handleInputChange, handlePredict, predictionResult }) {
+// predict page
+function PredictPage({ formData, handleInputChange, handlePredict, predictionResult, clusterResult , regressionResult}) {
   return (
     <div className="section-narrow">
       <h1 className="h1-lg">Predict Passenger Satisfaction</h1>
@@ -207,6 +207,35 @@ function PredictPage({ formData, handleInputChange, handlePredict, predictionRes
             </div>
           </div>
         )}
+{/*Regression satisfaction score (from Ridge) */}
+{regressionResult && (
+  <div className="center mt-4">
+    {regressionResult.error ? (
+      <div className="badge badge--bad">
+        Regression error: {regressionResult.error}
+      </div>
+    ) : (
+      <div className="badge badge--ok">
+        Satisfaction score (Ridge): {regressionResult.score_percent}% 
+      </div>
+    )}
+  </div>
+)}
+
+        {/* show cluster result below satisfaction */}
+        {clusterResult && (
+          <div className="center mt-4">
+            {clusterResult.error ? (
+              <div className="badge badge--bad">
+                Cluster error: {clusterResult.error}
+              </div>
+            ) : (
+              <div className="badge badge--ok">
+                Assigned Cluster: {clusterResult.cluster_label}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -263,12 +292,14 @@ function ReportsPage({ predictions }) {
   );
 }
 
-/* ---------------------------------- App ---------------------------------- */
+/*App  */
 
 export default function AirlineSatisfactionSystem() {
   const [currentPage, setCurrentPage] = useState('home');
   const [predictions, setPredictions] = useState([]);
   const [predictionResult, setPredictionResult] = useState('');
+  const [clusterResult, setClusterResult] = useState(null);   // 🔹 NEW
+const [regressionResult, setRegressionResult] = useState(null);
 
   const [formData, setFormData] = useState({
     gender: 'Female',
@@ -313,7 +344,71 @@ export default function AirlineSatisfactionSystem() {
     return satisfaction;
   };
 
-  const handlePredict = () => setPredictionResult(predictSatisfaction());
+
+  const handlePredict = async () => {
+    const satisfaction = predictSatisfaction();
+    setPredictionResult(satisfaction);
+
+    // build payload for backend (keys must match feature_cols names)
+    const payload = {
+      Age: Number(formData.age),
+      "Flight Distance": Number(formData.flightDistance),
+      "Departure Delay in Minutes": Number(formData.departureDelay),
+
+      "Seat comfort": Number(formData.seatComfort),
+      "Inflight wifi service": Number(formData.inflightWifi),
+      "Online boarding": Number(formData.onlineBoarding),
+      "Cleanliness": Number(formData.cleanliness),
+      "Baggage handling": Number(formData.baggageHandling),
+      "Gate location": Number(formData.gateLocation),
+      "Inflight entertainment": Number(formData.inflightEntertainment),
+
+      Gender: formData.gender === "Female" ? 1 : 0,
+      "Customer Type": formData.customerType === "Loyal" ? 1 : 0,
+      "Type of Travel": formData.travelType === "Business" ? 1 : 0,
+    };
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/api/predict-cluster", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Backend error:", data);
+        setClusterResult({ error: data.error || "Server error" });
+        return;
+      }
+
+      setClusterResult(data);
+    } catch (err) {
+      console.error(err);
+      setClusterResult({ error: "Network error while calling backend" });
+    }
+    //Regression satisfaction score (Ridge)
+  try {
+    const res2 = await fetch("http://127.0.0.1:5000/api/regression-score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data2 = await res2.json();
+
+    if (!res2.ok) {
+      console.error("Backend error (regression):", data2);
+      setRegressionResult({ error: data2.error || "Server error" });
+    } else {
+      setRegressionResult(data2);
+    }
+  } catch (err) {
+    console.error(err);
+    setRegressionResult({ error: "Network error while calling regression API" });
+  }
+  };
 
   return (
     <div className="app">
@@ -330,6 +425,9 @@ export default function AirlineSatisfactionSystem() {
             handleInputChange={handleInputChange}
             handlePredict={handlePredict}
             predictionResult={predictionResult}
+             regressionResult={regressionResult}
+            clusterResult={clusterResult}
+            
           />
         )}
         {currentPage === 'reports' && <ReportsPage predictions={predictions} />}

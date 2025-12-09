@@ -19,9 +19,7 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState("");
 
-  // -----------------------------
   // Load dashboard data from Flask
-  // -----------------------------
   useEffect(() => {
     async function load() {
       try {
@@ -41,9 +39,7 @@ export default function Dashboard() {
     load();
   }, []);
 
-  // -----------------------------
   // Error / loading states
-  // -----------------------------
   if (error) {
     return (
       <div className="section-wide">
@@ -64,9 +60,7 @@ export default function Dashboard() {
     );
   }
 
-  // -----------------------------
   // Basic numbers & distributions
-  // -----------------------------
   const totalPassengers = summary.total_passengers ?? 0;
   const distributions = summary.distributions || {};
 
@@ -77,9 +71,7 @@ export default function Dashboard() {
   const custDist = distributions.customer_type || {};
   const pctLoyal = custDist["Loyal Customer"] ?? 0;
 
-  // -----------------------------
   // Helpers for charts
-  // -----------------------------
 const animationSettings = {
   animateScale: true,    // Zoom in effect (scale animation)
   animateRotate: true,   // Rotation animation for Pie charts
@@ -124,7 +116,6 @@ const crossOptions = {
   plugins: {
     legend: { position: "top" },
 
-    // ⬇️ add this block ⬇️
     datalabels: {
       anchor: "end",
       align: "top",
@@ -192,9 +183,7 @@ const pieOptions = {
   const travelPieData = buildPieData(distributions.travel || {});
   const classPieData = buildPieData(distributions.class || {});
 
-  // -----------------------------
   // JSX
-  // -----------------------------
   return (
     <div className="section-wide">
       <div className="dashboard-card">
@@ -232,12 +221,12 @@ const pieOptions = {
             </div>
           </div>
 
-          <p className="chart-note">
+          {/* <p className="chart-note">
             The satisfaction variable is fairly balanced, with a slightly higher
             share of passengers marked as{" "}
             <strong>Not satisfied</strong> compared to{" "}
             <strong>Satisfied</strong>.
-          </p>
+          </p> */}
         </div>
 
         {/* Passenger profile – distributions (pie charts) */}
@@ -327,8 +316,7 @@ const pieOptions = {
         </div>
 
         <p className="chart-footnote">
-          This dashboard provides a quick overview of the cleaned training
-          dataset used for the airline passenger satisfaction project.
+
         </p>
       </div>
     </div>
