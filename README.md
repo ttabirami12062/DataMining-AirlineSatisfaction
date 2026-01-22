@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# Airline Passenger Satisfaction — Data Mining Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains an end-to-end data mining project built around a simple goal: **understand what drives airline passenger satisfaction and predict it reliably**.  
+Along with model training and evaluation, a working **React and Flask web app** is included so predictions and insights can be explored through a clean dashboard instead of only notebooks.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Demo (YouTube)
+https://youtu.be/TPWopQruvhI
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## GitHub Repository
+https://github.com/ttabirami12062/DataMining-AirlineSatisfaction
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## What this project does
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project supports three useful outcomes:
 
-### `npm run build`
+**1) Predict satisfaction for an individual passenger**  
+Given travel + service details, the system returns:
+- a **Satisfaction label** (Satisfied / Not Satisfied)
+- a **Satisfaction score** (0–1 style score from a regression model)
+- a **Passenger segment** (cluster assignment)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**2) Explain the main drivers behind satisfaction**  
+Regression models are used to make the relationship between features and satisfaction easier to interpret (service scores, delays, and travel context).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**3) Segment passengers into groups**  
+PCA + K-Means are used to group passengers into clusters that represent different experience patterns (ex: high-service vs low-service groups).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Methods Included
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Regression (scoring + interpretability)
+Used to produce a satisfaction score and understand feature impact:
+- OLS
+- Ridge
+- Lasso
+- Piecewise regression (where applicable)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Clustering (passenger segmentation)
+- PCA for dimensionality reduction
+- K-Means for clustering
+- Cluster quality checked using standard metrics (Elbow / Silhouette / CH score depending on the experiment design)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Classification (main prediction)
+- Random Forest (implemented from scratch in the project workflow)
+- Tuned to improve generalization and reduce overfitting
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Dataset
+Dataset source: **Kaggle – Airline Passenger Satisfaction**  
+Typical fields include passenger type, travel type/class, delays, and multiple service rating categories.  
+The target is converted into a binary label:
+- `Satisfied = 1`
+- `Neutral/Dissatisfied = 0`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Data Preparation (high-level)
 
-### Code Splitting
+The dataset is prepared for modeling by:
+- removing non-informative ID columns
+- handling missing values (median for numeric, mode for categorical)
+- encoding categorical variables (binary mapping + one-hot encoding where needed)
+- engineering practical features such as:
+  - **Total_Delay = Departure Delay + Arrival Delay**
+  - **Total_Service_Score = average of service rating features**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Web App Overview (React + Flask)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Frontend (React)**
+- Pages commonly include: Home, About, Predict, Reports, Dashboard
+- Predict page allows user input and shows model outputs clearly
 
-### Making a Progressive Web App
+**Backend (Flask)**
+- Loads trained models (`.pkl`)
+- Recreates engineered features during inference
+- Exposes endpoints for predictions and dashboard summaries
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Example endpoints:
+- `POST /api/predict`
+- `GET /api/dashboard-summary`
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
